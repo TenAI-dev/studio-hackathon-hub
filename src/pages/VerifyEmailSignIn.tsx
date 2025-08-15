@@ -4,64 +4,47 @@ import { Button } from '@/components/Button';
 import { OTPInput } from '@/components/studio/OTPInput';
 import { HeaderBack } from '@/components/studio/HeaderBack';
 import { useAuthStore } from '@/store/useAuthStore';
-import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function VerifyEmailSignIn() {
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   const navigate = useNavigate();
-  const { profileDraft, setAuthenticated, setOnboardingComplete } = useAuthStore();
-  const { toast } = useToast();
+  const { profileDraft, emailPending, setOnboardingComplete } = useAuthStore();
+  const { verifyEmail, sendSignInOtp } = useAuth();
 
   const handleVerify = async () => {
     if (otp.length !== 4) return;
     
     setLoading(true);
-    try {
-      // Simulate verification
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Set authentication state
-      setAuthenticated(true);
+    const email = emailPending || profileDraft.email || '';
+    
+    const { error } = await verifyEmail(email, otp);
+    
+    if (!error) {
       setOnboardingComplete(true);
-      
-      toast({
-        title: "Welcome back!",
-        description: "You have been signed in successfully.",
-      });
-      
       navigate('/home');
-    } catch (error) {
-      toast({
-        title: "Verification Failed",
-        description: "Invalid verification code. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
     }
+    
+    setLoading(false);
   };
 
   const handleResend = async () => {
-    setResending(true);
-    try {
-      // Simulate resending OTP
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Code Resent",
-        description: "A new verification code has been sent to your email.",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to resend code. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setResending(false);
+    const DEV_MODE = import.meta.env.VITE_AUTH_DEV_MODE === 'true';
+    
+    if (DEV_MODE) {
+      return; // No resend in dev mode
     }
+
+    setResending(true);
+    const email = emailPending || profileDraft.email || '';
+    
+    if (email) {
+      await sendSignInOtp(email);
+    }
+    
+    setResending(false);
   };
 
   const maskEmail = (email: string) => {
@@ -86,7 +69,7 @@ export default function VerifyEmailSignIn() {
           <p className="text-studio-text-muted mb-8">
             Enter the code that was sent to your Email Id{' '}
             <span className="font-medium">
-              {profileDraft.email ? maskEmail(profileDraft.email) : 'your email'}
+              {(emailPending || profileDraft.email) ? maskEmail(emailPending || profileDraft.email || '') : 'your email'}
             </span>
           </p>
 
@@ -94,8 +77,14 @@ export default function VerifyEmailSignIn() {
             value={otp}
             onChange={setOtp}
             onComplete={handleVerify}
-            className="mb-8"
+            className="mb-4"
           />
+
+          {import.meta.env.VITE_AUTH_DEV_MODE === 'true' && (
+            <p className="text-xs text-studio-text-muted mb-4 text-center">
+              Dev mode: enter any 4 digits (default {import.meta.env.VITE_DEV_FAKE_OTP || '4242'})
+            </p>
+          )}
 
           <div className="mb-8">
             <span className="text-studio-text-muted text-sm">Did not receive the code? </span>

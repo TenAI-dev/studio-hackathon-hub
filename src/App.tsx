@@ -16,6 +16,11 @@ import VerifyEmailSignUp from "./pages/VerifyEmailSignUp";
 import SignIn from "./pages/SignIn";
 import VerifyEmailSignIn from "./pages/VerifyEmailSignIn";
 import Home from "./pages/Home";
+import HackathonDetails from "./pages/HackathonDetails";
+import RegistrationForm from "./pages/RegistrationForm";
+import EducationForm from "./pages/EducationForm";
+import SubmissionPreview from "./pages/SubmissionPreview";
+import RegistrationSuccess from "./pages/RegistrationSuccess";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +41,11 @@ const AppRoutes = () => {
     return (
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/hackathon/:id" element={<HackathonDetails />} />
+        <Route path="/registration" element={<RegistrationForm />} />
+        <Route path="/registration/education" element={<EducationForm />} />
+        <Route path="/registration/preview" element={<SubmissionPreview />} />
+        <Route path="/registration/success" element={<RegistrationSuccess />} />
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

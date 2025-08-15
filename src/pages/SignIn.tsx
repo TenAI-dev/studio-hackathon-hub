@@ -7,7 +7,7 @@ import { Button } from '@/components/Button';
 import { TextField } from '@/components/studio/TextField';
 import { HeaderBack } from '@/components/studio/HeaderBack';
 import { useAuthStore } from '@/store/useAuthStore';
-import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 
 const signInSchema = z.object({
   email: z.string().email('Please enter a valid email address')
@@ -19,7 +19,7 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setProfileDraft } = useAuthStore();
-  const { toast } = useToast();
+  const { sendSignInOtp } = useAuth();
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignInForm>({
     resolver: zodResolver(signInSchema)
@@ -31,21 +31,11 @@ export default function SignIn() {
       // Save email to store for verification screen
       setProfileDraft({ email: data.email });
       
-      // Simulate OTP sending
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { error } = await sendSignInOtp(data.email);
       
-      toast({
-        title: "Verification code sent",
-        description: "Please check your email for the verification code.",
-      });
-      
-      navigate('/verify-email-signin');
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send verification code. Please try again.",
-        variant: "destructive",
-      });
+      if (!error) {
+        navigate('/verify-email-signin');
+      }
     } finally {
       setLoading(false);
     }

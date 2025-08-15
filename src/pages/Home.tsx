@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Calendar, MapPin, Users } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/ui/card';
+import { useAuth } from '@/hooks/useAuth';
 import { useAuthStore } from '@/store/useAuthStore';
 import heroCollaboration from '@/assets/hero-collaboration.jpg';
 
@@ -31,7 +32,8 @@ const hackathons = [
 
 export default function Home() {
   const navigate = useNavigate();
-  const { profileDraft } = useAuthStore();
+  const { signOut } = useAuth();
+  const { user, profileDraft } = useAuthStore();
 
   return (
     <div className="min-h-screen bg-studio-bg-light">

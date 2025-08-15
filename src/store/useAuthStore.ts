@@ -15,6 +15,7 @@ interface AuthState {
   isAuthenticated: boolean;
   user: any | null;
   loading: boolean;
+  emailPending: string | null;
   
   // Onboarding state
   hasCompletedOnboarding: boolean;
@@ -28,6 +29,7 @@ interface AuthState {
   setOnboardingComplete: (complete: boolean) => void;
   setSelectedRole: (role: UserRole | null) => void;
   setProfileDraft: (draft: Partial<ProfileDraft>) => void;
+  setEmailPending: (email: string | null) => void;
   clearAuth: () => void;
 }
 
@@ -38,6 +40,7 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       user: null,
       loading: false,
+      emailPending: null,
       hasCompletedOnboarding: false,
       selectedRole: null,
       profileDraft: {},
@@ -49,12 +52,14 @@ export const useAuthStore = create<AuthState>()(
       setOnboardingComplete: (complete) => set({ hasCompletedOnboarding: complete }),
       setSelectedRole: (role) => set({ selectedRole: role }),
       setProfileDraft: (draft) => set({ profileDraft: { ...get().profileDraft, ...draft } }),
+      setEmailPending: (email) => set({ emailPending: email }),
       clearAuth: () => set({
         isAuthenticated: false,
         user: null,
         selectedRole: null,
         profileDraft: {},
         hasCompletedOnboarding: false,
+        emailPending: null,
       }),
     }),
     {

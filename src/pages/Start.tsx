@@ -40,6 +40,13 @@ export default function Start() {
           Sign in to Studio
         </Button>
       </div>
+
+      {/* Dev Mode Watermark */}
+      {import.meta.env.VITE_AUTH_DEV_MODE === 'true' && (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <span className="text-xs text-white/60">Auth Dev Mode</span>
+        </div>
+      )}
     </div>
   );
 }
