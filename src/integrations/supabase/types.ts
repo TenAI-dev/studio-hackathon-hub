@@ -14,13 +14,126 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      users: {
+        Row: {
+          auth_id: string
+          bio: string | null
+          city: string | null
+          country: string | null
+          created_at: string | null
+          email: string
+          email_notifications: boolean | null
+          email_verified: boolean | null
+          experience_level: string | null
+          github_url: string | null
+          hackathons_judged: number | null
+          hackathons_organized: number | null
+          hackathons_participated: number | null
+          hackathons_won: number | null
+          id: string
+          interests: string[] | null
+          is_active: boolean | null
+          is_verified: boolean | null
+          language: string | null
+          last_login: string | null
+          linkedin_url: string | null
+          name: string
+          notifications_enabled: boolean | null
+          phone: string | null
+          portfolio_url: string | null
+          profile_picture_url: string | null
+          push_notifications: boolean | null
+          role: string
+          skills: string[] | null
+          state: string | null
+          twitter_url: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          auth_id: string
+          bio?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email: string
+          email_notifications?: boolean | null
+          email_verified?: boolean | null
+          experience_level?: string | null
+          github_url?: string | null
+          hackathons_judged?: number | null
+          hackathons_organized?: number | null
+          hackathons_participated?: number | null
+          hackathons_won?: number | null
+          id?: string
+          interests?: string[] | null
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          language?: string | null
+          last_login?: string | null
+          linkedin_url?: string | null
+          name: string
+          notifications_enabled?: boolean | null
+          phone?: string | null
+          portfolio_url?: string | null
+          profile_picture_url?: string | null
+          push_notifications?: boolean | null
+          role: string
+          skills?: string[] | null
+          state?: string | null
+          twitter_url?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          auth_id?: string
+          bio?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string
+          email_notifications?: boolean | null
+          email_verified?: boolean | null
+          experience_level?: string | null
+          github_url?: string | null
+          hackathons_judged?: number | null
+          hackathons_organized?: number | null
+          hackathons_participated?: number | null
+          hackathons_won?: number | null
+          id?: string
+          interests?: string[] | null
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          language?: string | null
+          last_login?: string | null
+          linkedin_url?: string | null
+          name?: string
+          notifications_enabled?: boolean | null
+          phone?: string | null
+          portfolio_url?: string | null
+          profile_picture_url?: string | null
+          push_notifications?: boolean | null
+          role?: string
+          skills?: string[] | null
+          state?: string | null
+          twitter_url?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_user_profile: {
+        Args: {
+          p_auth_id: string
+          p_email: string
+          p_language?: string
+          p_name: string
+          p_role?: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
