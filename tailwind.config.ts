@@ -18,7 +18,27 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+			},
 			colors: {
+				// Studio brand colors
+				studio: {
+					orange: 'hsl(var(--studio-orange))',
+					'orange-light': 'hsl(var(--studio-orange-light))',
+					purple: 'hsl(var(--studio-purple))',
+					blue: 'hsl(var(--studio-blue))',
+					'blue-light': 'hsl(var(--studio-blue-light))',
+					'text-dark': 'hsl(var(--studio-text-dark))',
+					'text-light': 'hsl(var(--studio-text-light))',
+					'text-muted': 'hsl(var(--studio-text-muted))',
+					'bg-light': 'hsl(var(--studio-bg-light))',
+					'bg-white': 'hsl(var(--studio-bg-white))',
+					participant: 'hsl(var(--studio-participant))',
+					coordinator: 'hsl(var(--studio-coordinator))',
+					judge: 'hsl(var(--studio-judge))',
+				},
+				// Keep shadcn compatibility
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -52,16 +72,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
